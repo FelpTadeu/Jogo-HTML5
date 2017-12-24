@@ -8,6 +8,7 @@
   <script src="animacao.js"></script>
   <script src="teclado.js"></script>
   <script src="nave.js"></script>
+  <script src="tiro.js"></script>
 </head>
 <body>
   <canvas id="canvas_nave" width="500" height="500" style="border: 1px solid black;"></canvas>
@@ -23,6 +24,11 @@
     imgNave.src = "img/nave.png";
     var nave = new Nave(context, teclado, imgNave);
     animacao.novoSprite(nave);
+
+    // Nunca foi tão fácil mandar uma nave atirar
+    teclado.disparou(ESPACO, function(){
+      nave.atirar();
+    });
 
     // Quando carregar a imagem iniciar a animação
     imgNave.onload = function(){
