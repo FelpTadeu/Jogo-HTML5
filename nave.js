@@ -27,14 +27,9 @@ Nave.prototype = {
   },
   desenhar: function(){
     this.context.drawImage(this.imagem, this.x, this.y, this.imagem.width, this.imagem.height);
-    this.context.strokeRect(this.x, this.y, this.imagem.width, this.imagem.height);
+    // this.context.strokeRect(this.x, this.y, this.imagem.width, this.imagem.height);
   },
   atirar: function(){
-    /*
-      Repare que posso mudar, e não passar mais a nave pelo construtor para o tiro(segundo parâmetro, this), e posso fazer direto como no exemplo abaixo(Essa maneira foi utilizada no capítulo 3, no teclao-teste-3)
-      t.x = this.x + this.imagem.width/2 - t.largura/2;
-      t.y = this.y - t.altura;
-    */
     var t = new Tiro(this.context, this);
     this.animacao.novoSprite(t);
   }
