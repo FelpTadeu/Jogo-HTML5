@@ -11,7 +11,7 @@
   <script src="tiro.js"></script>
   <script src="colisor.js"></script>
   <script src="ovni.js"></script>
-  <script src="fundo.js"></script>
+  <script src="Fundo.js"></script>
 </head>
 <body>
   <canvas id="canvas_inimigos" width="500" height="500" style="border: 1px solid black;"></canvas>
@@ -60,6 +60,8 @@
 
     var colisor = new Colisor();
     colisor.novoSprite(nave);
+    animacao.novoProcessamento(colisor);
+    console.log(animacao);
 
     teclado.disparou(ESPACO, function(){
       nave.atirar();

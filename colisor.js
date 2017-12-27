@@ -1,11 +1,13 @@
 function Colisor(){
   this.sprites = [];
   this.aoColidir = null;
+  this.spritesExcluir = [];
 }
 
 Colisor.prototype = {
   novoSprite: function(sprite){
     this.sprites.push(sprite);
+    sprite.colisor = this;
   },
   processar: function(){
     // inicio com um objeto vazio
@@ -36,6 +38,8 @@ Colisor.prototype = {
         }
       }
     }
+
+    this.processarExclusoes();
   },
   testarColisao: function(sprite1, sprite2){
     // Obter os retângulos de colisão de cada sprite
@@ -51,10 +55,11 @@ Colisor.prototype = {
           // ############################################################################# Debugging
           this.sprites[0].cor = "green";
           this.sprites[1].cor = "orange";
-          console.log("##################################################### Depois de processar");
-          console.log("x: " + rets1[i].x + "\ny: " + rets1[i].y + "\nlargura: " + (rets1[i].x + rets1[i].largura) + "\naltura: " + (rets1[i].y + rets1[i].altura));
-          console.log("x: " + rets2[i].x + "\ny: " + rets2[i].y + "\nlargura: " + (rets2[i].x + rets2[i].largura) + "\naltura: " + (rets2[i].y + rets2[i].altura));
-          console.log("==================================================================");
+          // Este trecho de código está causando um bug no jogo, pois como o objeto é excluído ao colidir ele não consegue mais acessá-lo
+          // console.log("##################################################### Depois de processar");
+          // console.log("x: " + rets1[i].x + "\ny: " + rets1[i].y + "\nlargura: " + (rets1[i].x + rets1[i].largura) + "\naltura: " + (rets1[i].y + rets1[i].altura));
+          // console.log("x: " + rets2[i].x + "\ny: " + rets2[i].y + "\nlargura: " + (rets2[i].x + rets2[i].largura) + "\naltura: " + (rets2[i].y + rets2[i].altura));
+          // console.log("==================================================================");
           // ############################################################################# Debugging
 
           // Eles colidem vamos notificá-los
@@ -88,5 +93,22 @@ Colisor.prototype = {
              "a:" + retangulos[i].altura + "\n";
     }
     return str;
+  },
+  excluirSprite: function(sprite){
+    this.spritesExcluir.push(sprite);
+  },
+  processarExclusoes: function(){
+    var novoArray = [];
+
+    // Adicionar somente os elementos não excluídos
+    for(var i in this.sprites){
+      if(this.spritesExcluir.indexOf(this.sprites[i]) == -1){
+        novoArray.push(this.sprites[i]);
+      }
+    }
+
+    this.spritesExcluir = [];
+
+    this.sprites = novoArray;
   }
 }
