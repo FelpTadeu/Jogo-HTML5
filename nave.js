@@ -9,12 +9,14 @@ function Nave(context, teclado, imagem){
 
 Nave.prototype = {
   atualizar: function(){
+    var incremento = this.velocidade * this.animacao.decorrido / 1000;
+
     if(this.teclado.pressionada(SETA_ESQUERDA) && this.x > 5){
-      this.x -= this.velocidade;
+      this.x -= incremento;
     }
 
     if(this.teclado.pressionada(SETA_DIREITA) && this.x < this.context.canvas.width - this.imagem.width - 5){
-      this.x += this.velocidade;
+      this.x += incremento;
     }
 
     if(this.teclado.pressionada(SETA_CIMA) && this.y > 5){

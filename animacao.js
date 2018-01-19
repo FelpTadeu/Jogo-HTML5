@@ -5,6 +5,8 @@ function Animacao(context){
   this.processamentos = [];
   this.spritesExcluir = [];
   this.processamentosExcluir = [];
+  this.ultimoCiclo = 0;
+  this.decorrido = 0;
 }
 
 Animacao.prototype = {
@@ -21,8 +23,12 @@ Animacao.prototype = {
   },
   proximoFrame: function(){
     if(!this.ligado) return;
-    // Retirado, pois a partir deste ponto estarei trabalhando sempre com o fundo rolando, então não é preciso limpar animação, apenas desenhá-la por cima, isso salvará algum processamento.
+    // Retirado, pois a partir deste ponto estarei trabalhando sempre com o fundo rolando, então não é preciso limpar animação, apenas desenhá-la por cima, isto salvará algum processamento.
     // this.limparTela();
+
+    var agora = new Date().getTime();
+    if(this.ultimoCiclo == 0) this.ultimoCiclo = agora;
+    this.decorrido = agora - this.ultimoCiclo;
 
     for(var i in this.sprites){
       this.sprites[i].atualizar();
@@ -37,6 +43,9 @@ Animacao.prototype = {
     }
 
     this.processarExclusoes();
+
+    // Atualizar o instante do último ciclo
+    this.ultimoCiclo = agora;
 
     var animacao = this;
     requestAnimationFrame(function(){
