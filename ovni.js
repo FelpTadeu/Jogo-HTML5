@@ -1,14 +1,15 @@
-function Ovni(context, imagem){
+function Ovni(context, imagem, imgExplosao){
   this.context = context;
   this.imagem = imagem;
   this.x = 0;
   this.y = 0;
   this.velocidade = 0;
+  this.imgExplosao = imgExplosao;
 }
 
 Ovni.prototype = {
   atualizar: function(){
-    this.y += this.velocidade;
+    this.y += this.velocidade * this.animacao.decorrido/1000;
 
     // Excluir o tiro quando sair da tela
     if(this.y > this.context.canvas.height){
@@ -31,8 +32,10 @@ Ovni.prototype = {
     var ctx =  this.context;
     for(var i in rets){
       ctx.save();
-      ctx.strokeStyle = "yellow";
-      ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
+      // === Debugging ==========
+      // ctx.strokeStyle = "yellow";
+      // ctx.strokeRect(rets[i].x, rets[i].y, rets[i].largura, rets[i].altura);
+      // === Debugging ==========
       ctx.restore();
     }
 
@@ -45,6 +48,9 @@ Ovni.prototype = {
       this.colisor.excluirSprite(this);
       this.animacao.excluirSprite(outro);
       this.colisor.excluirSprite(outro);
+
+      var explosao = new Explosao(this.context, this.imgExplosao, this.x, this.y);
+      this.animacao.novoSprite(explosao);
     }
 
   }
