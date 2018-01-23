@@ -15,6 +15,7 @@ Animacao.prototype = {
     sprite.animacao = this;
   },
   ligar: function(){
+    this.ultimoCiclo = 0;
     this.ligado = true;
     this.proximoFrame();
   },
